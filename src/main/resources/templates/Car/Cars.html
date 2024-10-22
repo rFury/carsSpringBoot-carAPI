@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"   
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link
+rel="stylesheet"
+type="text/css"
+href="webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+/>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script
+type="text/javascript"
+src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+></script>
+<head>
+    <meta charset="utf-8" />
+    <title>Cars</title>
+</head>
+<body>
+    <div th:replace="Car/Template.html"></div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">Liste des Voitures</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Car Model</th>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>Family</th>
+                        <th>Delete/Edit</th>
+                    </tr>
+                    <tr th:each="car : ${Cars}">
+                        <td th:text="${car.carID}"></td>
+                        <td th:text="${car.carModel}"></td>
+                        <td th:text="${car.carBrand}"></td>
+                        <td th:text="${car.price}"></td>
+                        <td th:text="${car.familyGroup.Group_Name}"></td>
+                        <td><a class="btn btn-danger" th:href="@{supprimerCar(id=${car.carID},
+                        page=${currentPage},size=${size})}" onclick="return confirm('Etes-vous sûr ?')">Delete</a>
+                        <a class="btn btn-warning" th:href="@{modifierCar(id=${car.carID},
+                        page=${currentPage},size=${size})}">Edit</a></td>
+                    </tr>
+                </table>
+                <ul class="nav nav-pills">
+                    <li th:each="0,status:${pages}">
+                    <a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+                    th:href="@{ All(page=${status.index}, size=${size} ) }"
+                    th:text="${status.index }"></a>
+                    </li>
+                    </ul>
+                   
+            </div>
+        </div>
+    </div>
+</body>
+</html>
